@@ -2,7 +2,7 @@
 using System.Collections;
 
 /*
- *This scripts relate to player movement and controls 
+ *This scripts relate to the player's movement and controls
  */
 
 public class FirstPersonController : MonoBehaviour {
