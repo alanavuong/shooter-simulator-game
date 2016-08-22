@@ -1,0 +1,21 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Weapons\Guns\SwitchWeapon.cs">
+    <Files>
+      <File FileName="Assets\Weapons\Guns\DestroyBulletHoleByTime.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DestroyGameObjectBoundary.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Objectives\TargetHealthPoint.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Objectives\WinConditions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Problems.cs" Line="1" Column="1" />
+      <File FileName="Assets\Weapons\Grenades\SpawnGrenade.cs" Line="1" Column="1" />
+      <File FileName="Assets\Weapons\Grenades\ThrowGrenade.cs" Line="1" Column="1" />
+      <File FileName="Assets\Weapons\Guns\Ammunation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Weapons\Guns\RaycastShooting.cs" Line="227" Column="12" />
+      <File FileName="Assets\Weapons\Guns\SwitchWeapon.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

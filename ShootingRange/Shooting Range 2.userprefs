@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Weapons\Guns\RaycastShooting.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Problems.cs" Line="18" Column="26" />
+      <File FileName="Assets\Scripts\Weapons\Guns\RaycastShooting.cs" Line="155" Column="3" />
+      <File FileName="Assets\Scripts\Weapons\Grenades\ThrowGrenade.cs" Line="66" Column="48" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
