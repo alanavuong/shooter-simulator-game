@@ -11,4 +11,4 @@
 ###'2' second weapon
 ###'shift' sprint
 ###'c' crouch
-#note: I don't remember the controls completely so some of these are wrong or mix up.
+###note: I don't remember the controls completely so some of these are wrong or mix up.
