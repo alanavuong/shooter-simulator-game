@@ -49,14 +49,16 @@ public class RaycastShooting : MonoBehaviour
 
 	void Start()
 	{
-		displayRemainingTargets ();//display count of remaining target
+		playerCamera = camera.GetComponent<Camera> ();
+
 		gunClipSizeMax = gunStats.gunClipSize;//start off with a full magazine
 		ammunitionCount = gunStats.numberOfClips * gunClipSizeMax;//start off with this fixed amount of ammo
 		maximumammunition = ammunitionCount;//store the maximum ammunition for the gun
+
+		reloadMessage();//display reload message upon emptying whole clip
 		displayMagazineCount ();
 		displayammunitionCount ();
-		reloadMessage();//display reload message upon emptying whole clip
-		playerCamera = camera.GetComponent<Camera> ();
+		displayRemainingTargets ();//display count of remaining target
 	}
 
 	// Update is called once per frame
