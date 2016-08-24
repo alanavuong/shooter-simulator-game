@@ -4,7 +4,7 @@ using System.Collections;
 public class TargetHealthPoint : MonoBehaviour {
 
 	//how many health point the target has
-	public float totalHealth;//starting health points for target
+	public float totalHealth;//starting health points for that 1 target
 	private float currentHealth;//health decrease upon damage
 
 	void Start()
