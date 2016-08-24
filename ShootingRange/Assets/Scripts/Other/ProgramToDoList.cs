@@ -3,7 +3,8 @@ using System.Collections;
 
 //this just a place to list all my to do list for this program
 
-public class Problems : MonoBehaviour {
+public class ProgramToDoList : MonoBehaviour 
+{
 
 	//CURRENT TASKS FOR THIS GAME OR ISSUES
 	//fix progamming style if it is not good enough
