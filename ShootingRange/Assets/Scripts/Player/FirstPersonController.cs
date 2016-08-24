@@ -3,7 +3,8 @@ using System.Collections;
 
 //this scripts relate to the player's movement and camera
 
-public class FirstPersonController : MonoBehaviour {
+public class FirstPersonController : MonoBehaviour 
+{
 
 	private float currentSprintSpeed;
 	public float movementSpeed = 5.0f;//speed of player
@@ -27,7 +28,7 @@ public class FirstPersonController : MonoBehaviour {
 	public float crouchingSpeedTransition; //how fast the player moves from standing to crouching or vise versa
 	private float currentCrouchingMovementSpeed;
 	public float crouchingMovementSpeed;//movement speed decrease upon crouching
-	private float playerCurrentHeight;//player's return to these height 
+	private float playerOriginalStandingHeight;//player's return to these height 
 
 	private bool isCrouching = false;//crooching determines whether sprinting available and speed change
 
@@ -140,10 +141,10 @@ public class FirstPersonController : MonoBehaviour {
 			playerController.height += crouchingSpeedTransition;
 		}
 		
-		playerCurrentHeight = playerController.height;//change game controller or player to match height
+		playerOriginalStandingHeight = playerController.height;//change game controller or player to match height
 
 		//isCrouching takes a value to decide whether to sprint or not
-		if (playerCurrentHeight >= playerHeight) 
+		if (playerOriginalStandingHeight >= playerHeight) 
 		{
 			isCrouching = false;
 		} 
