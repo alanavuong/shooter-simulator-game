@@ -49,7 +49,7 @@ public class RaycastShooting : MonoBehaviour
 
 	void Start()
 	{
-		displayTargetLeftText ();//display count of remaining target
+		displayRemainingTargets ();//display count of remaining target
 		gunClipSizeMax = gunStats.gunClipSize;//start off with a full magazine
 		ammunitionCount = gunStats.numberOfClips * gunClipSizeMax;//start off with this fixed amount of ammo
 		maximumammunition = ammunitionCount;//store the maximum ammunition for the gun
@@ -68,7 +68,7 @@ public class RaycastShooting : MonoBehaviour
 	}
 
 	//display number of targets left
-	void displayTargetLeftText()
+	void displayRemainingTargets()
 	{
 		remainingTargets = getWinConditionsScript.requiredTargetDestroyed - targetCount;//Display number of target and subtract when destroyed
 		remainingTargetsCountText.text = "Targeting left: "+ remainingTargets;//display remaining targets
