@@ -46,28 +46,28 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\DestroyGameObjectBoundary.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\CountdownTimer.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\DestroyBulletOverTime.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\DestroyTarget.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\GoingUp.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\GunMechanic.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\ProjectileShot.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\TargetCount.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\ThrowGrenade2.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\ThrowGrenade3.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\WaitTimeScript.cs" />
+     <Compile Include="Assets\Scripts\FailedScripts\ZoomIn.cs" />
      <Compile Include="Assets\Scripts\Objectives\TargetHealthPoint.cs" />
      <Compile Include="Assets\Scripts\Objectives\WinConditions.cs" />
+     <Compile Include="Assets\Scripts\Other\DestroyGameObjectBoundary.cs" />
+     <Compile Include="Assets\Scripts\Other\Problems.cs" />
      <Compile Include="Assets\Scripts\Player\FirstPersonController.cs" />
-     <Compile Include="Assets\Scripts\Problems.cs" />
-     <Compile Include="Assets\UselessScripts\CountdownTimer.cs" />
-     <Compile Include="Assets\UselessScripts\DestroyBulletOverTime.cs" />
-     <Compile Include="Assets\UselessScripts\DestroyTarget.cs" />
-     <Compile Include="Assets\UselessScripts\GoingUp.cs" />
-     <Compile Include="Assets\UselessScripts\GunMechanic.cs" />
-     <Compile Include="Assets\UselessScripts\ProjectileShot.cs" />
-     <Compile Include="Assets\UselessScripts\Script\ZoomIn.cs" />
-     <Compile Include="Assets\UselessScripts\TargetCount.cs" />
-     <Compile Include="Assets\UselessScripts\ThrowGrenade2.cs" />
-     <Compile Include="Assets\UselessScripts\ThrowGrenade3.cs" />
-     <Compile Include="Assets\UselessScripts\WaitTimeScript.cs" />
-     <Compile Include="Assets\Weapons\Grenades\SpawnGrenade.cs" />
-     <Compile Include="Assets\Weapons\Grenades\ThrowGrenade.cs" />
-     <Compile Include="Assets\Weapons\Guns\Ammunation.cs" />
-     <Compile Include="Assets\Weapons\Guns\DestroyBulletHoleByTime.cs" />
-     <Compile Include="Assets\Weapons\Guns\RaycastShooting.cs" />
-     <Compile Include="Assets\Weapons\Guns\SwitchWeapon.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Grenades\SpawnGrenade.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Grenades\ThrowGrenade.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Guns\Ammunation.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Guns\DestroyBulletHoleByTime.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Guns\RaycastShooting.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Guns\SwitchWeapon.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
