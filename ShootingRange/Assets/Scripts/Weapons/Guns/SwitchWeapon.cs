@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SwitchWeapon : MonoBehaviour {
+//this script allows gun switching
 
-	//this script allows gun switching
-	public bool isHoldingWeapon = false;
+public class SwitchWeapon : MonoBehaviour 
+{	
 	public RaycastShooting getRaycastScript;
 	public GameObject rifle;
 	public GameObject pistol;
+	public bool isHoldingWeapon = false;
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown ("Switch Weapon")) {//clicking button allows switching
-			print ("clicked!");
-			isHoldingWeapon = !isHoldingWeapon;//turn boolean to true/false 
+	void Update () 
+	{
+		//clicking button allows switching
+		if (Input.GetButtonDown ("Switch Weapon")) 
+		{
+			isHoldingWeapon = !isHoldingWeapon;//a toggle between rifle and pistol
 			rifle.SetActive (!isHoldingWeapon);//one is off than the other is on
 			pistol.SetActive (isHoldingWeapon);
 		}
 
-		getRaycastScript.displayMagazineCount ();//subtract from ammunation count
-		getRaycastScript.displayammunitionCount ();//display ammo count
+		getRaycastScript.displayMagazineCount ();//display new magazine count
+		getRaycastScript.displayammunitionCount ();//display new ammo count
 	}
 }
