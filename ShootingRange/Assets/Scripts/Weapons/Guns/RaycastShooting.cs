@@ -2,45 +2,42 @@
 using UnityEngine.UI;
 using System.Collections;
 
-/*
- * This scripts relates to guns
- * */
+//this script relates to guns
 
 [System.Serializable]
 public class GunStats
 {
+	public float bulletDamage;//damage per bullet
 	public float roundsPerMinute;//how fast the gun fires
 	public int bulletPerFire; //bullet shot per click
 	public float bulletRange;//distance of the bullet trail
 	public int gunClipSize; //how much bullet in clip
-	public int numberOfClips;//how many magazine does the ammonation contain;
+	public int numberOfClips;//how many magazine does the ammonation contain
 	public float gunRecoil;//how much the guns moves from its original position
-	public float bulletDamage;//damage per bullet
 }
 
-public class RaycastShooting : MonoBehaviour {
+public class RaycastShooting : MonoBehaviour 
+{
 
-	public GunStats gunStats;//stats of gun ability
+	public GunStats gunStats;//stats of gun's ability
 	private float nextFire;//how long it takes for the next shot to shoot
-	private float roundsPerSecond;//conversation factor for rounds per minute
+	private float roundsPerSecond;//conversation rounds per minute to rounds per second
 	private bool magazineLoaded = true; //check if magazine is empty
-	private int ammunitionCount;//total ammunition usable
+	private int ammunitionCount;//total ammunition usable that not in the gun
 	public int gunClipSizeMax = 0;
-	public int bulletTransfer;//for each bullet consume, reloading will take more ammo out
+	public int bulletTransfer;//the number of bullets you shoot in one magazine is the number of bullet you reload with
 	public int magazineSpillOver;//prevent current maximimun ammo from being your current magazine ammo
 	public int maximumammunition;//the max ammunition stored
 
-	public int targetCount = 0;//would prefer public variable but it would be unacessiable
-	public Text remainingTargetsCountText;	//display the remaining number of target
+	public int targetCount = 0;//would prefer private variable but it only work as public
+	public Text remainingTargetsCountText;//display the remaining number of target
 	private int remainingTargets;
 
-	public WinConditions getWinConditionsScript;//gets the game object with win condition script
+	public WinConditions getWinConditionsScript;
 
 	public GameObject bulletHole;//spawn bullet hole upon hitting objects
-	//public Transform bulletEndPoint;//bullet end point through travel
 	public float bulletHoleLifespan;//how long bullet hole stays
 
-	//public GameObject ammunition;
 
 	public Text bulletMagazineText;//tracks the ammunition of the gun magzine
 	public Text ammunitionText;//display total ammunition
@@ -50,77 +47,81 @@ public class RaycastShooting : MonoBehaviour {
 	private Camera playerCamera;
 	public GameObject camera;
 
-	void Start(){
+	void Start()
+	{
 		displayTargetLeftText ();//display count of remaining target
-		gunClipSizeMax = gunStats.gunClipSize;//store the maximu, mag size for comparison
-		ammunitionCount = gunStats.numberOfClips * gunClipSizeMax;
+		gunClipSizeMax = gunStats.gunClipSize;//start off with a full magazine
+		ammunitionCount = gunStats.numberOfClips * gunClipSizeMax;//start off with this fixed amount of ammo
 		maximumammunition = ammunitionCount;//store the maximum ammunition for the gun
-		displayMagazineCount ();//subtract from ammunition count
-		displayammunitionCount ();//display ammo count
+		displayMagazineCount ();
+		displayammunitionCount ();
 		reloadMessage();//display reload message upon emptying whole clip
 		playerCamera = camera.GetComponent<Camera> ();
 	}
+
 	// Update is called once per frame
-	void Update () {
-		//displayMagazineCount ();
+	void Update () 
+	{
 		pullGunTrigger ();//perform gun fire
-		reloadGun ();//refill gun and return unuse bullets into the ammunition count
+		reloadGun ();//refill magazine ammunition
 		aimDownTheSight ();//gun will zoom in and points towards crosshair
 	}
 
-	void displayTargetLeftText(){//display number of targets left
+	//display number of targets left
+	void displayTargetLeftText()
+	{
 		remainingTargets = getWinConditionsScript.requiredTargetDestroyed - targetCount;//Display number of target and subtract when destroyed
 		remainingTargetsCountText.text = "Targeting left: "+ remainingTargets;//display remaining targets
-		//print ("whatever");
 	}
 
 	//fire your gun with a line trail
-	void pullGunTrigger(){
-		//transform.rotation = Quaternion.identity;
+	void pullGunTrigger()
+	{
 
 		Vector3 bulletSpawnPoint = transform.forward;//bullet shoot forward
-		//Quaternion randomAngle = Random.rotation;//produce a random angle
-		//Quaternion bulletRotationAngle = Quaternion.LookRotation (bulletSpawnPoint);//
-		//transform.rotation = Quaternion.RotateTowards(bulletRotationAngle, randomAngle, Random.Range (0.0f, gunStats.gunRecoil));
-		//transit position between bullet start to some random float
-
-		//Debug.DrawLine(transform.position, bulletEndPoint.position, Color.red);
 		RaycastHit hit;
 
 		if ((Input.GetKey("p") && !Input.GetButton ("Sprint")) && (Time.time > nextFire) &&
-		    magazineLoaded == true) {
-			print ("you are in the code");
-			//fire gun and control rate of fire, fire only if gun has ammo
+		    magazineLoaded == true) 
+		{
 			bulletShotCounter ();
 			roundsPerSecond = Mathf.Pow (gunStats.roundsPerMinute / 60.0f, -1);
 			nextFire = Time.time + roundsPerSecond;//calculate a time for the next bullet to fire
-			Ray ray = new Ray(transform.position, transform.forward);//shoot from spawn point toward forward
-			if(Physics.Raycast (ray, out hit, gunStats.bulletRange)){//raycast fire at gameobject
-				if (hit.collider.gameObject.tag == "Target")//if target tagged than it destroyed
+
+			//shoot from spawn point in front of the gun to the forward direciton
+			Ray ray = new Ray(transform.position, transform.forward);
+
+			//raycast fire at target
+			if(Physics.Raycast (ray, out hit, gunStats.bulletRange)){
+				//if target tagged is hit by your gun trail
+				if (hit.collider.gameObject.tag == "Target")
 				{
 					if(hit.collider.gameObject != null)
 					{
-						hit.collider.gameObject.SendMessage ("applyDamage", gunStats.bulletDamage);
-						/*Destroy(hit.transform.gameObject);//destroy tagged target
-						++targetCount;//a counter to keep track of target destroyed
-						displayTargetLeftText();//change target count if player destroys target*/
+						hit.collider.gameObject.SendMessage ("applyDamage", gunStats.bulletDamage);//deal bullet damage
 					}
-				}else if(hit.collider.gameObject)//if bullet miss target than create a bullet hole
+				//if bullet miss target than create a bullet hole
+				}else if(hit.collider.gameObject)
 				{
 					Instantiate(bulletHole, hit.point, Quaternion.identity);
 				}
 			}
 		}
+
 	}
 
-	//keeps track of how much bullet shot
-	void bulletShotCounter(){
-		if (gunStats.gunClipSize > 0) {//gun can only subtract if there ammo inside
+	//keeps track of how much bullet shot starting from a full magazine
+	void bulletShotCounter()
+	{
+		//gun can only subtract if there ammo inside
+		if (gunStats.gunClipSize > 0) 
+		{
 			gunStats.gunClipSize -= gunStats.bulletPerFire;//control how many bullet is fire per tap
 			++bulletTransfer;
-			//++gunClipSizeMax;
 			displayMagazineCount ();
-		} else {
+		} 
+		else 
+		{
 			magazineLoaded = false;//gun can't fire with no bullet inside
 			reloadMessageText.text = "Press r to reload";//no ammo will give a notification of no ammo available
 
@@ -128,119 +129,104 @@ public class RaycastShooting : MonoBehaviour {
 	}
 
 	//gun reloads except at full magazine
-	void reloadGun(){
+	void reloadGun()
+	{
+		//gun can only reload if you lost magazine ammo and you have enough ammo
 		if (Input.GetButton ("Reload") && (gunStats.gunClipSize != gunClipSizeMax) && ammunitionCount > 0
-			&& (ammunitionCount >= bulletTransfer)) {
-			//gun can only reload if you lost ammo and you have enough ammo
+			&& (ammunitionCount >= bulletTransfer)) 
+		{
 			magazineLoaded = true;//gun fire enable
-			ammunitionCount -= bulletTransfer;//take a pool of ammo for each lost
-			gunStats.gunClipSize += bulletTransfer;//refill your magazine with the bullet lost
-			//gunStats.gunClipSize = gunClipSizeMax;
+
+			ammunitionCount -= bulletTransfer;//takes that pool of ammo for each lost
+			gunStats.gunClipSize += bulletTransfer;//refill your magazine with that pool of ammo
+			bulletTransfer = 0;//now bullet transfer reset to prepare for next magazine
+
 			displayMagazineCount ();
-			bulletTransfer = 0;//now bullet consume will check next magazine for current amount of ammo
 			displayammunitionCount ();
 			reloadMessage();
-		} else if(Input.GetButton("Reload") && (gunStats.gunClipSize != gunClipSizeMax) && ammunitionCount
-		          < bulletTransfer && ammunitionCount > 0){
-			//this second condition prevent ammunition from reaching negative ammo
+		} 
+		//gun has lost magazine ammo and there not enough ammo left to fill magazine completely and ammo isn't negative
+		else if(Input.GetButton("Reload") && (gunStats.gunClipSize != gunClipSizeMax) && ammunitionCount
+		          < bulletTransfer && ammunitionCount > 0)
+		{
 			magazineLoaded = true;
+
 			gunStats.gunClipSize += ammunitionCount;//add remaining clip into magazine
-			ammunitionCount = 0;//prevent ammo count from reducing below zero
+			ammunitionCount = 0;//prevents ammo count from reducing below zero
+			bulletTransfer = 0;//this ready for the next magazine if player finds more ammunition
+
 			displayMagazineCount ();
 			displayammunitionCount ();
-			bulletTransfer -= ammunitionCount;
-			bulletTransfer = 0;
 			reloadMessage();
 		}
 	}
-
-	//display the magazine count
-	public void displayMagazineCount(){
+	
+	public void displayMagazineCount()
+	{
 		bulletMagazineText.text = gunStats.gunClipSize.ToString ();
 	}
-
-	//display the ammunition counts
-	public void displayammunitionCount(){
+	
+	public void displayammunitionCount()
+	{
 		ammunitionText.text = ammunitionCount.ToString ();
 	}
 
-	//hide message for reloading beyond zero ammunition in magazines
-	void reloadMessage(){
+	//hide message to reload until player reach zero magazine
+	void reloadMessage()
+	{
 		reloadMessageText.text = "";
 	}
 
-	//player refill ammo upon picking it up
-	public bool refillAmmunition(int numberOfClips, bool excessiveAmmo){
-		//excessiveAmmo = true;
-		if ((gunClipSizeMax + maximumammunition) <= (gunStats.gunClipSize + ammunitionCount)) {//can't pass max ammunition
+	//player refill ammo upon picking ammo box up
+	public bool refillAmmunition(int numberOfClips, bool excessiveAmmo)
+	{
+		//can't add more ammo if you have max ammunition
+		if ((gunClipSizeMax + maximumammunition) <= (gunStats.gunClipSize + ammunitionCount)) 
+		{
 			excessiveAmmo = false;//ammo can't be pick up with their max ammo
-		}else if ((maximumammunition) < (gunStats.gunClipSize + ammunitionCount) && 
-		          (gunStats.gunClipSize + ammunitionCount) < (gunClipSizeMax + maximumammunition)) {
-			//add bullet to ammunition pool for the first clip
+		}
+		//prevent picking up ammo if player is suppose to be full already
+		else if ((maximumammunition) < (gunStats.gunClipSize + ammunitionCount) && 
+		          (gunStats.gunClipSize + ammunitionCount) < (gunClipSizeMax + maximumammunition)) 
+		{
+			excessiveAmmo = true;
 			ammunitionCount += (maximumammunition + gunClipSizeMax) - (ammunitionCount + gunStats.gunClipSize);
 			displayammunitionCount ();
+		}
+		//adds a full magazine to pool of ammo ammusing there ammo doesn't suppass maximun ammo limit
+		else if ((gunClipSizeMax <= (gunStats.gunClipSize + ammunitionCount) && (gunStats.gunClipSize + ammunitionCount) <= maximumammunition)) 
+		{
 			excessiveAmmo = true;
-		}else if ((gunClipSizeMax <= (gunStats.gunClipSize + ammunitionCount) && (gunStats.gunClipSize + ammunitionCount) <= maximumammunition)) {
-			//add a magazine to pool of ammo
 			ammunitionCount += numberOfClips * gunClipSizeMax;
 			displayammunitionCount ();
+		} 
+		//maintains bulletTransfer count to prevent magazine size becoming the previous magazine size when it reload
+		else if(0 <= (gunStats.gunClipSize + ammunitionCount) && (gunStats.gunClipSize + ammunitionCount) < gunClipSizeMax)
+		{
 			excessiveAmmo = true;
-		} else if(0 <= (gunStats.gunClipSize + ammunitionCount) && (gunStats.gunClipSize + ammunitionCount) < gunClipSizeMax){
-			//maintain bulletTransfer to prevent diminishing magazine max size for the last remaining clip
+
 			ammunitionCount += numberOfClips * gunClipSizeMax;
 			bulletTransfer = gunClipSizeMax - gunStats.gunClipSize;
+
 			displayammunitionCount ();
-			excessiveAmmo = true;
 		}
 
-		return excessiveAmmo;//goes into another script to decide to destroy ammo or not
+		return excessiveAmmo;//goes into another script to decide to destroy ammo box or not
 
 		}
 
+
+	//decrease field of view upon aiming down the sight
 	void aimDownTheSight()
 	{
-		if(Input.GetKey ("o")){
+		if(Input.GetKey ("o"))
+		{
 			playerCamera.fieldOfView = fieldOfView;
-		}else{
+		}
+		else
+		{
 			playerCamera.fieldOfView = 60.0f;
 		}
 	}
 
 }
-
-/*
-
-This gives the player max ammo so that broken
-		if (Input.GetKey ("q")) {
-			print("you press q");
-			magazineSpillOver = gunClipSizeMax - gunStats.gunClipSize;
-			bulletTransfer = magazineSpillOver;
-			ammunitionCount = gunStats.numberOfClips * gunClipSizeMax + bulletTransfer;
-			displayammunitionCount();
-			}
-I forgot the problem here
-		if(gunStats.ammunitionCount > gunClipSizeMax){
-		}else{
-				gunStats.ammunitionCount = 0;
-				bulletTransfer = 0;
-		}
-Modulus operator is bad idea for ammo
-		}else if (ammunitionCount < gunStats.gunClipSize) {
-			//bulletTransfer =  gunClipSizeMax - gunStats.gunClipSize % gunClipSizeMax;
-			bulletTransfer += gunClipSizeMax % gunStats.gunClipSize;
-			print (bulletTransfer);
-			ammunitionCount += numberOfClips * gunClipSizeMax;
-			displayammunitionCount ();
-			print ("bullet consume is");
-			print ("1");
-		}else if (maximumammunition >= (ammunitionCount + gunStats.gunClipSize)) {//add one mag to ammo pool
-			ammunitionCount += numberOfClips * gunClipSizeMax;
-			displayammunitionCount ();
-			print("choice 1 active");
-		} else if ((maximumammunition + gunClipSizeMax) > (ammunitionCount + gunStats.gunClipSize)) {
-			//maximize the total ammo including the clip and ammo pool base on the remaining ammo in the clip
-			ammunitionCount = maximumammunition + (gunClipSizeMax - gunStats.gunClipSize % gunClipSizeMax);
-			//set ammo to max ammo plus bullet consume 
-			displayammunitionCount ();
-			print("choice 2 active");
-*/
