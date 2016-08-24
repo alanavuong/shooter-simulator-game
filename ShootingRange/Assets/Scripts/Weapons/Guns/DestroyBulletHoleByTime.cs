@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyBulletHoleByTime : MonoBehaviour {
+//destroy bullet upon a period of time when spawn
+
+public class DestroyBulletHoleByTime : MonoBehaviour 
+{
 
 	public float bulletHoleLifespan;
 
-	//destroy bullet hole upon a period of time when spawn
-	void Start () {
+	void Start () 
+	{
 		Destroy (gameObject, bulletHoleLifespan);
 	}
 }
