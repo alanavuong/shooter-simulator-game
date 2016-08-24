@@ -19,6 +19,6 @@ public class SwitchWeapon : MonoBehaviour {
 		}
 
 		getRaycastScript.displayMagazineCount ();//subtract from ammunation count
-		getRaycastScript.displayAmmunationCount ();//display ammo count
+		getRaycastScript.displayammunitionCount ();//display ammo count
 	}
 }

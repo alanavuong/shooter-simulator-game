@@ -9,7 +9,7 @@ public class TargetHealthPoint : MonoBehaviour {
 
 	void Start()
 	{
-		currentHealth = totalHealth;//so health is not connected with other health script
+		currentHealth = totalHealth;//makes health independent of target 1, 2, 3, etc.
 	}
 
 	//this check for damage dealt on target
@@ -17,7 +17,7 @@ public class TargetHealthPoint : MonoBehaviour {
 	{
 		currentHealth -= damage;//target lose health
 		if (currentHealth <= 0) {//health below or at zero means object destroys itself
-			GameObject.Find ("Objective Location").SendMessage("targetCounter", 1);//reduce number of target needed to be destroy by one
+			GameObject.Find ("Objective Location").SendMessage("targetCounter", 1);//this decreases the number of required targets to destroy by 1
 			Destroy (gameObject);
 		}
 	}
